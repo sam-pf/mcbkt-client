@@ -5,10 +5,10 @@ Physics Front.
 
 ## Javascript
 
-The javascript module `mcbkt_client` is found in file `mcbkt_client.js`.
-This module is written in pure javascript without using any external library.
-However, the library is written using some features of ECMAScript6 (AKA ES6
-or ECMAScript 2015; [see here for ES6 features](http://es6-features.org)).
+The javascript module `mcbkt_client` is found in folder `js`.  This module is
+written in pure javascript without using any external library.  However, the
+library is written using some features of ECMAScript6 (AKA ES6 or ECMAScript
+2015; [see here for ES6 features](http://es6-features.org)).
 
 This means that it should be used with up-to-date browsers.  [See here for
 ES6 compatibility information](https://kangax.github.io/compat-table/es6/)
