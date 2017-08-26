@@ -8,7 +8,7 @@
  *   the URL request.  If data is passed a value, then "Content-Type" header
  *   is set as JSON for the XMLHttpRequest.  JSON.stringify is called on data
  *   in order to prepare JSON to send.
- * @return A promise instance.  The returned object can be used as follows:
+ * @returns A promise instance.  The returned object can be used as follows:
  *   <pre>
  *     ajax_as_promise ('https://...')
  *     .then ((data) => {
@@ -37,3 +37,5 @@ var ajax_as_promise = function (url, method = "GET", data) {
     req.send (data)
   })
 }
+
+ajax_as_promise
