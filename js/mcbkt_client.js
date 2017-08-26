@@ -1,6 +1,8 @@
 function ajax_as_promise (url, method = "GET", data) {
-  if (! ( method in ["GET", "POST"] )) throw Error
-    ("method must be one of GET and POST")
+  // ref: https://stackoverflow.com/questions/8567114/
+  method = method.toUpperCase ()
+  if (! method.match (/^(GET|POST)$/))
+    throw Error ("method must be one of GET and POST.")
   return new Promise ((resolve, reject) => {
     const req = new XMLHttpRequest ()
     req.open (method, url)
@@ -15,10 +17,14 @@ function ajax_as_promise (url, method = "GET", data) {
   })
 }
 
-get('foo.txt')
-.then((data) => {
+/* // <<< How to use the return value of ajax_as_promise:
+
+ajax_as_promise ('https://...')
+.then ((data) => {
   // Do stuff with data, if foo.txt was successfully loaded.
 })
-.catch((err) => {
+.catch ((err) => {
   // Do stuff on error...
-});
+})
+
+*/ // >>>
