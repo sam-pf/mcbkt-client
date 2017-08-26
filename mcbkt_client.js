@@ -7,8 +7,10 @@ function ajax_as_promise (url, method = "GET", data) {
    * method:  'get' or 'post' (case-independent).  This argument is
    *          meaningful only if url uses http(s) protocol.
    *
-   * data:  Any data that will be passed as JSON.  If data is passed a value,
+   * data:  Any data that will be sent as JSON.  If data is passed a value,
    *        then "Content-Type" header is set as JSON for the XMLHttpRequest.
+   *        JSON.stringify is called on data in order to prepare JSON to
+   *        send.
    *
    * The return value (Promise object) can be used as follows.
    *

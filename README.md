@@ -11,7 +11,8 @@ However, the library is written using some features of ECMAScript6 (AKA ES6
 or ECMAScript 2015; [see here for ES6 features](http://es6-features.org)).
 
 This means that it should be used with up-to-date browsers.  [See here for
-ES6 compatibility](https://kangax.github.io/compat-table/es6/).
+ES6 compatibility information](https://kangax.github.io/compat-table/es6/)
+for various browsers.
 
 ## Python
 
