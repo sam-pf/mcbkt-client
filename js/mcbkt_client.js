@@ -1,17 +1,14 @@
 /**
  * Makes an ajax call to url and returns a Promise object.
- *
- * @param {String} method - Currently, accepted values are 'get' and 'post'
+ * @param {string} url - URL to connect to.
+ * @param {string} method - Currently, accepted values are 'get' and 'post'
  *   (case-independent).  This argument is meaningful only if url uses
  *   http(s) protocol.
- *
- * @param {} data - Any data that will be sent as JSON with the URL request.
- *   If data is passed a value, then "Content-Type" header is set as JSON
- *   for the XMLHttpRequest.  JSON.stringify is called on data in order to
- *   prepare JSON to send.
- *
- * @return a promise instance.
- *   The returned object can be used as follows:
+ * @param {JSON.stringfy-able} data - Any data that will be sent as JSON with
+ *   the URL request.  If data is passed a value, then "Content-Type" header
+ *   is set as JSON for the XMLHttpRequest.  JSON.stringify is called on data
+ *   in order to prepare JSON to send.
+ * @return A promise instance.  The returned object can be used as follows:
  *   <pre>
  *     ajax_as_promise ('https://...')
  *     .then ((data) => {
@@ -21,10 +18,9 @@
  *       // Do stuff on error...
  *     })
  *   </pre>
- *
- * @see Reference: https://stackoverflow.com/questions/8567114/*
+ * @see https://stackoverflow.com/questions/8567114/
  */
-function ajax_as_promise (url, method = "GET", data) {
+var ajax_as_promise = function (url, method = "GET", data) {
   method = method.toUpperCase ()
   if (! /^(GET|POST)$/.test (method))
     throw Error (`Unsupported method: ${method}`)
@@ -41,7 +37,3 @@ function ajax_as_promise (url, method = "GET", data) {
     req.send (data)
   })
 }
-
-/*
- */
-
