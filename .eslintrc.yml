@@ -10,8 +10,10 @@ rules:
     - error
     - unix
   quotes:
-    - error
+    - warn
     - double
   semi:
     - error
     - never
+parserOptions:
+  sourceType: "module"
