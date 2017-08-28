@@ -24,3 +24,7 @@ At the top directory of this repo, run the following two commands.
 npm install
 make
 ```
+
+In order for the make command to work, bash and GNU make are required.  If
+these are not installed in your system, you might want/need to look inside of
+`GNUmakefile`, extract desired commands, and run them by hand.
