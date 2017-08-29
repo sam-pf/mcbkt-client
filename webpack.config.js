@@ -1,9 +1,14 @@
 const webpack = require ('webpack')
 
 module.exports = {
-  entry: './src/mcbkt-client.js',
+  // entry: ['babel-polyfill', './src/mcbkt-client.js'],
+  entry: ['./src/mcbkt-client.js'],
+  // devtool: 'source-map',
   output: {
-    filename: './lib/mcbkt-client.bundle.min.js'
+    filename: './lib/mcbktclient.js',
+    library: 'mcbktclient',
+    libraryTarget: 'umd',
+    umdNamedDefine: true
   },
   module: {
     rules: [
@@ -28,7 +33,7 @@ module.exports = {
         }
       }
     ]
-  },
+  } /*,
   plugins: [
     new webpack.optimize.UglifyJsPlugin ({
       compress: {
@@ -38,5 +43,5 @@ module.exports = {
         comments: false,
       },
     }),
-  ]
+  ] */
 }

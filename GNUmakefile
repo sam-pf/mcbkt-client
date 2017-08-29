@@ -11,7 +11,7 @@ SRC_FILES:=$(wildcard $(SRC_DIR) $(SRC_DIR)/* $(SRC_DIR)/*/*)
 DOC_DIR:=doc
 DOC_REFFILE:=$(DOC_DIR)/index.html
 LIB_DIR:=lib
-WEBPACKFILE:=$(LIB_DIR)/mcbkt-client.bundle.min.js
+WEBPACKFILE:=$(LIB_DIR)/bundlelib.js
 WEBPACKCFG:=webpack.config.js
 WEBPACKBIN:=webpack
 

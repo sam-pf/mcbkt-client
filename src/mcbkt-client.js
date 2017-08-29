@@ -1,5 +1,3 @@
-import "babel-polyfill"
-
 /**
  * @fileOverview This module, <tt>mcbkt_client</tt>, contains utility
  *   functions for accessing MCBKT engine of <a
@@ -40,7 +38,7 @@ import "babel-polyfill"
  *   to prepare <tt>JSON</tt> to send and so the value of this argument
  *   should be <tt>JSON.stringify</tt>-able.
  */
-export function ajax_as_promise (url, method = "GET", data) {
+var ajax_as_promise = function (url, method = "GET", data) {
   method = method.toUpperCase ()
   return new Promise ((resolve, reject) => {
     const req = new XMLHttpRequest ()
@@ -56,4 +54,6 @@ export function ajax_as_promise (url, method = "GET", data) {
   })
 }
 
-export default function () {}
+// export default function () {}
+
+exports.ajax_as_promise = ajax_as_promise
