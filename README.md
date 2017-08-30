@@ -26,9 +26,6 @@ make
 ```
 
 In order for the make command to work, bash and GNU make are required.  If
-these are not installed in your system, you might want/need to look inside of
-`GNUmakefile`, extract desired commands, and run them by hand.
-
-Note that the `npm install` command will install lots of packages inside
-`node_modules` (which is not included in the git repository) up to a few
-hundred megabytes.
+these are not installed in your system, one way could be that you would
+want/need to look inside of `GNUmakefile`, extract desired commands, and run
+them by hand.

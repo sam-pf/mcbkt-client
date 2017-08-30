@@ -1,3 +1,5 @@
+"use strict"
+
 /**
  * @fileOverview This module, <tt>mcbkt_client</tt>, contains utility
  *   functions for accessing MCBKT engine of <a
@@ -16,12 +18,12 @@
  *   used as shown in the example.
  * @example
  * ajax_as_promise ('https://...', ...)
- *   .then ((data) => {
+ *   .then ((data) =>
  *      // do stuff with data
- *   })
- *   .catch ((err) => {
+ *   )
+ *   .catch ((err) =>
  *      // do stuff on error
- *   })
+ *   )
  * @see https://stackoverflow.com/questions/8567114/
  *
  * @param {String} url - URL to connect to.
@@ -38,7 +40,7 @@
  *   to prepare <tt>JSON</tt> to send and so the value of this argument
  *   should be <tt>JSON.stringify</tt>-able.
  */
-var ajax_as_promise = function (url, method = "GET", data) {
+function ajax_as_promise (url, method = "GET", data) {
   method = method.toUpperCase ()
   return new Promise ((resolve, reject) => {
     const req = new XMLHttpRequest ()
@@ -57,3 +59,11 @@ var ajax_as_promise = function (url, method = "GET", data) {
 // export default function () {}
 
 exports.ajax_as_promise = ajax_as_promise
+
+function ukde_api_key_please (url, handler) {
+  if ( url == undefined )
+    url = 'https://ukde.physicsfront.home/ukde_api_key_please'
+  ajax_as_promise (url).then (data => handler (data))
+}
+
+exports.ukde_api_key_please = ukde_api_key_please

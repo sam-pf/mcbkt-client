@@ -11,34 +11,53 @@ SRC_FILES:=$(wildcard $(SRC_DIR) $(SRC_DIR)/* $(SRC_DIR)/*/*)
 DOC_DIR:=doc
 DOC_REFFILE:=$(DOC_DIR)/index.html
 LIB_DIR:=lib
-WEBPACKFILE:=$(LIB_DIR)/bundlelib.js
+WEBPACKFILE:=$(LIB_DIR)/mcbktclient.js
 WEBPACKCFG:=webpack.config.js
 WEBPACKBIN:=webpack
 
 .PHONY: lint forever test webpack doc
 
-all: lint build
+all: lint dev build
 
 again: clean all
+
+npm-install: node_modules
+
+build: webpack doc
+
+lint: npm-install
+	@eslint $(JS_FILES)
 
 forever:
 	make-forever -c $(SRC_DIR)
 
+start:
+	NODE_ENV=start make webpack
+
+dev:
+	NODE_ENV=development make webpack
+
+build:
+	NODE_ENV=production make webpack
+
 test:
 	karma start
 
-lint:
-	@eslint $(JS_FILES)
+webpack: $(WEBPACKTIMESTAMP)
+	$(WEBPACKBIN) --config $(WEBPACKCFG)
 
-build: webpack doc
+# cross-env NODE_ENV=start make webpack",
+#    cross-env NODE_ENV=development make webpack",
+#    cross-env NODE_ENV=production make webpack",
 
-webpack: $(WEBPACKFILE)
+node_modules: package.json
+	npm install
 
 doc: $(DOC_REFFILE)
 
-webpack: $(WEBPACKFILE)
+webpack: $(WEBPACKTIMESTAMP)
 
-$(WEBPACKFILE): $(SRC_FILES) $(WEBPACKCFG)
+$(WEBPACKTIMESTAMP): $(SRC_FILES) $(WEBPACKCFG)
 	$(WEBPACKBIN) --config $(WEBPACKCFG)
 
 $(DOC_REFFILE): $(SRC_FILES) $(README_FILE)

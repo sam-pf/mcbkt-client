@@ -1,24 +1,61 @@
-const assert = require ('chai').assert
-const expect = require ('chai').expect
-const should = require ('chai').should ()
+const mylib = require ('../lib/mcbktclient.min')
 
-const lib = require ('../lib/mcbktclient')
-// const lib = require ('../src/mcbkt-client')
+const chai = require ('chai')
+const assert = chai.assert
+const expect = chai.expect
+const should = chai.should ()
+const mcbkt_url = "https://ukde.physicsfront.com/mcbkt"
 
-describe ("A silly demo", function () {
-  it ("is true", function () {
-    var test = true;
+describe ("My first silly test suite", function () { // <<<
+  it ("true should be both true and truthy", function () { // <<<
+    var test = true
     assert (test, true)
     expect (test, 'test object').to.be.ok
     test.should.be.ok && test.should.be.true
-  })
-})
-
-describe ("Plain ajax", function () {
-  it ("lib is loaded", function () {
-    var result = lib;
-    result.should.be.ok;
-    console.log (result);
-    result.ajax_as_promise.should.be.ok;
-  });
-})
+  }) // >>>
+}) // >>>
+describe ("UKDE MCBKT API", function () { // <<<
+  it ("ajax_as_promise is loadable", function () { // <<<
+    var result = mylib
+    result.should.be.ok
+    result.ajax_as_promise.should.be.ok
+  }) // >>>
+  it ("get method works", function () { // <<<
+    return mylib.ajax_as_promise ("https://ukde.physicsfront.com/")
+      .then (function (data) {
+        expect (data).to.be.ok
+      })
+  }) // >>>
+  // <<< How to use a Promise object in unit testing.
+  // We can do the unit testing with Promise objects, if we allow for a long
+  // enough timeout (see karma.config.js).  According to
+  // https://stackoverflow.com/questions/26571328/, Mocha handles Promise
+  // objects correctly if it is returned by the unit test function.  Indeed,
+  // this seems to be the case below.  I also tried "chai-as-promise"
+  // package, but it seems to lead to some weird error for phantomjs ("no let
+  // in strict mode" or something like it, which appears to be a bug coming
+  // from webpack+babel?!).  So, for now, just stick with the below patterns.
+  // >>>
+  it ("mcbkt ajax post fails without valid ukde_api_key", function () { // <<<
+    return mylib.ajax_as_promise (mcbkt_url, "post",
+      {
+        scores: [0.0, 0.0, 0.10, 0.92, 0.88, 0.92, 0.94, 0.98, 0.98, 0.70]
+      })
+      .then (
+        function (data) { true.should.not.be.ok },
+        function (error) { error.should.be.ok }
+      )
+  }) // >>>
+  it ("mcbkt ajax post succeeds with a valid ukde_api_key", function () { // <<<
+    console.log (process.env.UKDE_API_KEY)
+    return mylib.ajax_as_promise (mcbkt_url, "post",
+      {
+        ukde_api_key: process.env.UKDE_API_KEY,
+        // ukde_api_key: "ImNvZGFwQHBoeXNpY3Nmcm9udC5jb20i.DIL4NQ.Vb7SgJ2EqY712JHSDkYvAxGyG_Y",
+        scores: [0.0, 0.0, 0.10, 0.92, 0.88, 0.92, 0.94, 0.98, 0.98, 0.70]
+      })
+      .then (function (data) {
+        data.should.be.ok
+      })
+  }) // >>>
+}) // >>>

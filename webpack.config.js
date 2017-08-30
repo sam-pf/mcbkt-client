@@ -1,12 +1,14 @@
+const libname = 'mcbktclient'
 const webpack = require ('webpack')
 
 module.exports = {
-  // entry: ['babel-polyfill', './src/mcbkt-client.js'],
-  entry: ['./src/mcbkt-client.js'],
-  // devtool: 'source-map',
+  entry: (process.env.NODE_ENV === 'start' ? []: ['babel-polyfill']).concat
+    (['./src/mcbkt-client.js']),
+  devtool: 'source-map',
   output: {
-    filename: './lib/mcbktclient.js',
-    library: 'mcbktclient',
+    filename: './lib/' + libname + (process.env.NODE_ENV === 'production' ?
+                                    ".min" : "") + '.js',
+    library: libname,
     libraryTarget: 'umd',
     umdNamedDefine: true
   },
@@ -29,12 +31,12 @@ module.exports = {
             plugins: [
               require ('babel-plugin-transform-object-rest-spread')
             ],
-          }
-        }
-      }
-    ]
-  } /*,
-  plugins: [
+          },
+        },
+      },
+    ],
+  },
+  plugins: process.env.NODE_ENV === 'production' ? [
     new webpack.optimize.UglifyJsPlugin ({
       compress: {
         warnings: false,
@@ -42,6 +44,5 @@ module.exports = {
       output: {
         comments: false,
       },
-    }),
-  ] */
+    }) ]: [],
 }
