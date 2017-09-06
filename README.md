@@ -1,14 +1,15 @@
 # Javascript library for mcbkt client
 
 The `mcbkt-client` module can be used by clients of the MCBKT engine of UKDE
-by Physics Front.
+by Physics Front.  Or, it can be used as a lightweight ajax library.
 
-The javascript module `mcbkt-client` can be found in folder `src`.  This
-library is written using some features of ECMAScript6 (AKA ES6 or ECMAScript
-2015; [see here](http://es6-features.org) for a nice list of ES6 features).
+The javascript module `mcbkt-client` can be found in folder `src`.
 
-While the source module is written in ES6, the distribution module is
-compiled by babel to work with any reasonably recent browsers.
+This library is written in ES6 (ECMAScript6 or ECMAScript 2015; [see
+here](http://es6-features.org)).
+
+However, the distribution module is compiled by babel as UMD and so it should
+work in any reasonable environment.
 
 The distribution library for `mcbkt-client` is a standalone library.
 

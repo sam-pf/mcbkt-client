@@ -46,12 +46,11 @@ describe ("UKDE MCBKT API", function () { // <<<
         function (error) { error.should.be.ok }
       )
   }) // >>>
-  it ("mcbkt ajax post succeeds with a valid ukde_api_key", function () { // <<<
+  it ("mcbkt ajax post fails without valid ukde_api_key", function () { // <<<
     console.log (process.env.UKDE_API_KEY)
     return mylib.ajax_as_promise (mcbkt_url, "post",
       {
-        ukde_api_key: process.env.UKDE_API_KEY,
-        // ukde_api_key: "ImNvZGFwQHBoeXNpY3Nmcm9udC5jb20i.DIL4NQ.Vb7SgJ2EqY712JHSDkYvAxGyG_Y",
+        ukde_api_key: 'blahblah',
         scores: [0.0, 0.0, 0.10, 0.92, 0.88, 0.92, 0.94, 0.98, 0.98, 0.70]
       })
       .then (function (data) {

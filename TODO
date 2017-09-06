@@ -1,0 +1,3 @@
+* The make file needs to be cleaned up.
+	* The "start" version (no babel-polyfill) should be made separately than
+	  "build".

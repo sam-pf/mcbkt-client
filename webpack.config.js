@@ -1,4 +1,4 @@
-const libname = 'mcbktclient'
+const libname = 'mcbkt-client'
 const webpack = require ('webpack')
 
 module.exports = {

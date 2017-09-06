@@ -31,6 +31,8 @@
         
             
         
+            
+        
     
 </header>
 
@@ -132,6 +134,210 @@
 
 
         
+            
+
+    
+
+    
+    <h4 class="name" id="module:mcbkt_client"><span class="type-signature"></span>(require("mcbkt_client"))<span class="signature">(logdata<span class="signature-attributes">opt</span>, url<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Makes an ajax call to UKDE to post logdata and potentially get a MCBKT
+calculation done.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>logdata</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">This must be the logdata in the form of a hashmap.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>url</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">The URL for the MCBKT analysis.  For security,
+  no sensitive information must appear in the URL (or logdata).  The
+  current default value is a temporary one that should work "for a while".
+  However, it may stop working at some point, e.g., if better proxy URLs
+  are available.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="mcbkt-client.js.html">mcbkt-client.js</a>, <a href="mcbkt-client.js.html#line111">line 111</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    A <tt>Promise</tt> object.  The returned object can be
+  used as shown in the example.  When the promise is successfully
+  fulfilled, the returned data may not contain any MCBKT analysis result.
+  Only when the accumulated data merit a new MCBKT analysis, data will
+  contain MCBKT analysis result.
+</div>
+
+
+
+    
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>ajax_as_promise ('https://...', ...)
+  .then ((data) =>
+     // do stuff with data
+  )
+  .catch ((err) =>
+     // do stuff on error</code></pre>
+
+
+
+        
     
     </div>
 
@@ -158,7 +364,7 @@
     
 
     
-    <h4 class="name" id="~ajax_as_promise"><span class="type-signature">(inner) </span>ajax_as_promise<span class="signature">(url, method<span class="signature-attributes">opt</span>, data<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id=".ajax_as_promise"><span class="type-signature">(static) </span>ajax_as_promise<span class="signature">(url, method<span class="signature-attributes">opt</span>, data<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
     
 
     
@@ -287,11 +493,6 @@
 
             <td class="type">
             
-                
-<span class="param-type">JSON.stringfy-able</span>
-
-
-            
             </td>
 
             
@@ -317,10 +518,7 @@
   this argument means no <tt>JSON</tt> data.  Any true value will be
   converted to <tt>JSON</tt> to be sent.  Naturally, such value also
   causes the "Content-Type" header to be set to "json" for the
-  <tt>XMLHttpRequest</tt> object that opens request to <tt>url</tt>.  Type
-  requirement: <tt>JSON.stringify</tt> is called on <tt>data</tt> in order
-  to prepare <tt>JSON</tt> to send and so the value of this argument
-  should be <tt>JSON.stringify</tt>-able.</td>
+  <tt>XMLHttpRequest</tt> object that opens request to <tt>url</tt>.</td>
         </tr>
 
     
@@ -361,7 +559,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="mcbkt-client.js.html">mcbkt-client.js</a>, <a href="mcbkt-client.js.html#line43">line 43</a>
+        <a href="mcbkt-client.js.html">mcbkt-client.js</a>, <a href="mcbkt-client.js.html#line40">line 40</a>
     </li></ul></dd>
     
 
@@ -419,6 +617,212 @@
 
 
         
+            
+
+    
+
+    
+    <h4 class="name" id=".post_scores_for_mcbkt_analysis"><span class="type-signature">(static) </span>post_scores_for_mcbkt_analysis<span class="signature">(data<span class="signature-attributes">opt</span>, url<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Makes an ajax call to UKDE to post score data and potentially get a MCBKT
+calculation done.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>data</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">This must be a hashmap with an entry "scores", which
+  must hold an array of numbers, normally bound within the [0,1] range.
+  Optional entries include "score-max' and "times".</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>url</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">The URL for the MCBKT analysis.  For security,
+  no sensitive information must appear in the URL (or data).  The current
+  default value is a temporary one that should work "for a while".
+  However, it may stop working at some point, e.g., if better proxy URLs
+  are available.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="mcbkt-client.js.html">mcbkt-client.js</a>, <a href="mcbkt-client.js.html#line82">line 82</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    A <tt>Promise</tt> object.  The returned object can be
+  used as shown in the example.  When the promise is successfully
+  fulfilled, the returned data may not contain any MCBKT analysis result.
+  Only when the accumulated data merit a new MCBKT analysis, data will
+  contain MCBKT analysis result.
+</div>
+
+
+
+    
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>ajax_as_promise ('https://...', ...)
+  .then ((data) =>
+     // do stuff with data
+  )
+  .catch ((err) =>
+     // do stuff on error</code></pre>
+
+
+
+        
     
 
     
@@ -440,7 +844,7 @@
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.4</a> on Wed Aug 30 2017 09:21:30 GMT-0700 (PDT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.4</a> on Tue Sep 05 2017 17:52:50 GMT-0700 (PDT)
 </footer>
 
 <script> prettyPrint(); </script>
