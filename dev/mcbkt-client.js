@@ -37,8 +37,9 @@
  *   converted to <tt>JSON</tt> to be sent.  Naturally, such value also
  *   causes the "Content-Type" header to be set to "json" for the
  *   <tt>XMLHttpRequest</tt> object that opens request to <tt>url</tt>.
+ * @param {Object} [header] - A hashmap that will be set as request header.
  */
-export function ajax_as_promise (url, method = "GET", data) {
+export function ajax_as_promise (url, method = "GET", data, header) {
   method = method.toUpperCase ()
   return new Promise ((resolve, reject) => {
     const req = new XMLHttpRequest ()
@@ -50,6 +51,9 @@ export function ajax_as_promise (url, method = "GET", data) {
       req.setRequestHeader ("Content-Type", "application/json;charset=UTF-8")
       data = JSON.stringify (data)
     }
+    if (header !== undefined)
+       for (const key in header)
+         req.setRequestHeader (key, header [key])
     req.send (data)
   })
 }
@@ -81,8 +85,9 @@ export function ajax_as_promise (url, method = "GET", data) {
  *   are available.
  */
 export function post_scores_for_mcbkt_analysis (data,
-      url = 'https://ukde.physicsfront.com/mcbkt/codapproxy_stub') {
-   return ajax_as_promise (url, 'post', data)
+      url = 'https://ukde.physicsfront.com/mcbkt/codapproxy_stub',
+      header) {
+   return ajax_as_promise (url, 'post', data, header)
 }
 
 /**
@@ -110,8 +115,9 @@ export function post_scores_for_mcbkt_analysis (data,
  *   are available.
  */
 export function post_logdata_for_mcbkt_analysis (logdata,
-      url = 'https://ukde.physicsfront.com/logdata/codapproxy_stub') {
-   return ajax_as_promise (url, 'post', logdata)
+      url = 'https://ukde.physicsfront.com/logdata/codapproxy_stub',
+      header) {
+   return ajax_as_promise (url, 'post', logdata, header)
 }
 
 /**

@@ -46,15 +46,27 @@ describe ("UKDE MCBKT API", function () { // <<<
         function (error) { error.should.be.ok }
       )
   }) // >>>
-  it ("mcbkt ajax post fails with invalid ukde_api_key", function () { // <<<
-    return mylib.ajax_as_promise (mcbkt_url, "post",
-      {
-        ukde_api_key: 'blahblah',
-        scores: [0.0, 0.0, 0.10, 0.92, 0.88, 0.92, 0.94, 0.98, 0.98, 0.70]
-      })
-      .then (
-        function (data) { true.should.not.be.ok },
-        function (error) { error.should.be.ok }
-      )
-  }) // >>>
+  it ("mcbkt ajax post fails with (any) ukde_api_key passed in ajax data", // <<<
+      function () {
+         return mylib.ajax_as_promise (mcbkt_url, "post",
+           {
+             ukde_api_key: 'blahblah',
+             scores: [0.0, 0.0, 0.10, 0.92, 0.88, 0.92, 0.94, 0.98, 0.98, 0.70]
+           })
+           .then (
+             function (data) { true.should.not.be.ok },
+             function (error) { error.should.be.ok }
+           )
+      }) // >>>
+  it ("post_scores_for_mcbkt_analysis should succeed with only data",  // <<<
+     function () {
+        return mylib.post_scores_for_mcbkt_analysis (
+         {
+           scores: [0.0, 0.0, 0.10, 0.92, 0.88, 0.92, 0.94, 0.98, 0.98, 0.70]
+         })
+         .then (
+           function (data) { data.should.be.ok },
+           function (error) { true.should.not.be.ok }
+         )
+     })
 }) // >>>
