@@ -2,11 +2,11 @@
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
 	else if(typeof define === 'function' && define.amd)
-		define("mcbktclient", [], factory);
+		define("mcbkt-client", [], factory);
 	else if(typeof exports === 'object')
-		exports["mcbktclient"] = factory();
+		exports["mcbkt-client"] = factory();
 	else
-		root["mcbktclient"] = factory();
+		root["mcbkt-client"] = factory();
 })(this, function() {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
@@ -9089,18 +9089,19 @@ module.exports = function (regExp, replace) {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-
-
 /**
- * @fileOverview This module, <tt>mcbkt_client</tt>, contains utility
- *   functions for accessing MCBKT engine of <a
- *   href="https://ukde.physicsfront.com">UKDE by Physics Front</a>.
- * @author Sam Gweon (email: Sam at physicsfront.com)
+ * @fileOverview This module contains utility functions for accessing MCBKT
+ *   engine of <a href="https://ukde.physicsfront.com">UKDE by Physics
+ *   Front</a>.
+ * @copyright (c) 2017, Sam Gweon (Sam@physicsfront.com)
  * @license <a href="https://opensource.org/licenses/BSD-3-Clause">
  *   BSD-3-Clause</a>
+ * @author Sam Gweon (Sam@physicsfront.com)
  * @version 0.1.0
- * @module mcbkt_client
+ * @module mcbkt-client
  */
+
+
 
 /**
  * Makes an ajax call to <tt>url</tt> and returns a <tt>Promise</tt> object.
@@ -9134,7 +9135,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.ajax_as_promise = ajax_as_promise;
 exports.post_scores_for_mcbkt_analysis = post_scores_for_mcbkt_analysis;
-exports.default = post_logdata_for_mcbkt_analysis;
+exports.post_logdata_for_mcbkt_analysis = post_logdata_for_mcbkt_analysis;
 function ajax_as_promise(url) {
   var method = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "GET";
   var data = arguments[2];
@@ -9162,10 +9163,10 @@ function ajax_as_promise(url) {
  * calculation done.
  *
  * @returns {} A <tt>Promise</tt> object.  The returned object can be
- *   used as shown in the example.  When the promise is successfully
- *   fulfilled, the returned data may not contain any MCBKT analysis result.
- *   Only when the accumulated data merit a new MCBKT analysis, data will
- *   contain MCBKT analysis result.
+ *   used as shown in the example.  Just because the promise is successfully
+ *   fulfilled does not mean that the returned data will contain MCBKT
+ *   analysis result.  If <tt>error</tt> field does not exist, data will
+ *   contain valid MCBKT analysis result.
  * @example
  * ajax_as_promise ('https://...', ...)
  *   .then ((data) =>
@@ -9174,17 +9175,19 @@ function ajax_as_promise(url) {
  *   .catch ((err) =>
  *      // do stuff on error
  *
- * @param {} [logdata] - This must be the logdata in the form of a hashmap.
+ * @param {} [data] - This must be a hashmap with an entry "scores", which
+ *   must hold an array of numbers, normally bound within the [0,1] range.
+ *   Optional entries include "score-max' and "times".
  * @param {String} [url] - The URL for the MCBKT analysis.  For security,
- *   no sensitive information must appear in the URL (or logdata).  The
- *   current default value is a temporary one that should work "for a while".
+ *   no sensitive information must appear in the URL (or data).  The current
+ *   default value is a temporary one that should work "for a while".
  *   However, it may stop working at some point, e.g., if better proxy URLs
  *   are available.
  */
-function post_scores_for_mcbkt_analysis(logdata) {
+function post_scores_for_mcbkt_analysis(data) {
   var url = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'https://ukde.physicsfront.com/mcbkt/codapproxy_stub';
 
-  return ajax_as_promise(url, 'put', logdata);
+  return ajax_as_promise(url, 'post', data);
 }
 
 /**
@@ -9214,9 +9217,16 @@ function post_scores_for_mcbkt_analysis(logdata) {
 function post_logdata_for_mcbkt_analysis(logdata) {
   var url = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'https://ukde.physicsfront.com/logdata/codapproxy_stub';
 
-  return ajax_as_promise(url, 'put', logdata);
+  return ajax_as_promise(url, 'post', logdata);
 }
+
+/**
+ * <b>default export:</b> <a
+ * href="#.post_logdata_for_mcbkt_analysis">post_logdata_for_mcbkt_analysis</a>
+ */
+exports.default = post_logdata_for_mcbkt_analysis;
 
 /***/ })
 /******/ ]);
 });
+//# sourceMappingURL=mcbkt-client_compiled_umd.js.map

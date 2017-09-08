@@ -2,12 +2,11 @@
   "name": "mcbkt-client",
   "version": "0.1.0",
   "description": "Javascript library to connect to the MCBKT engine of PF",
-  "main": "mcbktclient.js",
+  "main": "mcbkt-client.js",
   "scripts": {
-    "start": "make start",
+    "test": "make test",
     "dev": "make dev",
-    "build": "make build",
-    "test": "make test"
+    "build": "make dist"
   },
   "author": "Sam Gweon",
   "email": "Sam@physicsfront.com",
@@ -34,6 +33,7 @@
     "karma-webpack": "^2.0.4",
     "mocha": "^3.5.0",
     "phantomjs": "^2.1.7",
+    "uglify-js-es6": "^2.8.9",
     "webpack": "^3.5.5"
   },
   "dependencies": {

@@ -1,4 +1,4 @@
-const mylib = require ('../lib/mcbktclient.min')
+const mylib = require ('../dist/mcbkt-client_compiled_umd')
 
 const chai = require ('chai')
 const assert = chai.assert
@@ -36,7 +36,7 @@ describe ("UKDE MCBKT API", function () { // <<<
   // in strict mode" or something like it, which appears to be a bug coming
   // from webpack+babel?!).  So, for now, just stick with the below patterns.
   // >>>
-  it ("mcbkt ajax post fails without valid ukde_api_key", function () { // <<<
+  it ("mcbkt ajax post fails without ukde_api_key", function () { // <<<
     return mylib.ajax_as_promise (mcbkt_url, "post",
       {
         scores: [0.0, 0.0, 0.10, 0.92, 0.88, 0.92, 0.94, 0.98, 0.98, 0.70]
@@ -46,15 +46,15 @@ describe ("UKDE MCBKT API", function () { // <<<
         function (error) { error.should.be.ok }
       )
   }) // >>>
-  it ("mcbkt ajax post fails without valid ukde_api_key", function () { // <<<
-    console.log (process.env.UKDE_API_KEY)
+  it ("mcbkt ajax post fails with invalid ukde_api_key", function () { // <<<
     return mylib.ajax_as_promise (mcbkt_url, "post",
       {
         ukde_api_key: 'blahblah',
         scores: [0.0, 0.0, 0.10, 0.92, 0.88, 0.92, 0.94, 0.98, 0.98, 0.70]
       })
-      .then (function (data) {
-        data.should.be.ok
-      })
+      .then (
+        function (data) { true.should.not.be.ok },
+        function (error) { error.should.be.ok }
+      )
   }) // >>>
 }) // >>>

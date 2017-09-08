@@ -1,13 +1,27 @@
 const libname = 'mcbkt-client'
 const webpack = require ('webpack')
 
+var postfixes = ['compiled', 'umd']
+var minify = false
+var polyfill = true
+var folder = './dev/'
+
+if ( /(\b|_)nobp(\b|_)/.test (process.env.WEBPACK_TARGET) ) {
+   polyfill = false
+   postfixes.push ('nobp')
+}
+
+if ( /(\b|_)pro(duction)?(\b|_)/.test (process.env.WEBPACK_TARGET) ) {
+   minify = true
+   folder = './dist/'
+}
+
 module.exports = {
-  entry: (process.env.NODE_ENV === 'start' ? []: ['babel-polyfill']).concat
-    (['./src/mcbkt-client.js']),
+  entry: (polyfill ? ['babel-polyfill'] : []).concat (['./src/' + libname
+                                                       + '.js']),
   devtool: 'source-map',
   output: {
-    filename: './lib/' + libname + (process.env.NODE_ENV === 'production' ?
-                                    ".min" : "") + '.js',
+    filename: folder + libname + '_' + postfixes.join ('_') + '.js',
     library: libname,
     libraryTarget: 'umd',
     umdNamedDefine: true
@@ -36,13 +50,13 @@ module.exports = {
       },
     ],
   },
-  plugins: process.env.NODE_ENV === 'production' ? [
+  plugins: minify ? [
     new webpack.optimize.UglifyJsPlugin ({
       compress: {
         warnings: false,
       },
       output: {
-        comments: false,
+        comments: "some", // Or, could be a regex such as /^!/
       },
-    }) ]: [],
+    })] : [],
 }
