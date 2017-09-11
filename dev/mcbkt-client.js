@@ -20,10 +20,13 @@
  * @example
  * ajax_as_promise ('https://...', ...)
  *   .then ((data) =>
- *      // do stuff with data
+ *      // do stuff with return data on successfully resolved promise
+ *      [, (reason) =>
+ *      // do stuff with reason on rejected promise
+ *      ]
  *   )
  *   .catch ((err) =>
- *      // do stuff on error
+ *      // deal with any errror thrown
  *   )
  * @see https://stackoverflow.com/questions/8567114/
  *
@@ -68,12 +71,16 @@ export function ajax_as_promise (url, method = "GET", data, header) {
  *   analysis result.  If <tt>error</tt> field does not exist, data will
  *   contain valid MCBKT analysis result.
  * @example
- * ajax_as_promise ('https://...', ...)
+ * post_scores_for_mcbkt_analysis (data, ...)
  *   .then ((data) =>
- *      // do stuff with data
+ *      // do stuff with return data on successfully resolved promise
+ *      [, (reason) =>
+ *      // do stuff with reason on rejected promise
+ *      ]
  *   )
  *   .catch ((err) =>
- *      // do stuff on error
+ *      // deal with any errror thrown
+ *   )
  *
  * @param {} [data] - This must be a hashmap with an entry "scores", which
  *   must hold an array of numbers, normally bound within the [0,1] range.
@@ -100,12 +107,16 @@ export function post_scores_for_mcbkt_analysis (data,
  *   Only when the accumulated data merit a new MCBKT analysis, data will
  *   contain MCBKT analysis result.
  * @example
- * ajax_as_promise ('https://...', ...)
+ * post_logdata_for_mcbkt_analysis (logdata, ...)
  *   .then ((data) =>
- *      // do stuff with data
+ *      // do stuff with return data on successfully resolved promise
+ *      [, (reason) =>
+ *      // do stuff with reason on rejected promise
+ *      ]
  *   )
  *   .catch ((err) =>
- *      // do stuff on error
+ *      // deal with any errror thrown
+ *   )
  *
  * @param {} [logdata] - This must be the logdata in the form of a hashmap.
  * @param {String} [url] - The URL for the MCBKT analysis.  For security,
