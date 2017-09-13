@@ -130,34 +130,36 @@ module.exports = __webpack_require__(1);
  */
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+   value: true
 });
 exports.ajax_as_promise = ajax_as_promise;
 exports.post_scores_for_mcbkt_analysis = post_scores_for_mcbkt_analysis;
 exports.post_logdata_for_mcbkt_analysis = post_logdata_for_mcbkt_analysis;
 function ajax_as_promise(url) {
-  var method = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "GET";
-  var data = arguments[2];
-  var header = arguments[3];
+   var method = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "GET";
+   var data = arguments[2];
+   var header = arguments[3];
 
-  method = method.toUpperCase();
-  return new Promise(function (resolve, reject) {
-    var req = new XMLHttpRequest();
-    req.open(method, url);
-    req.onload = function () {
-      return req.status === 200 ? resolve(req.response) : reject(Error(req.statusText));
-    };
-    req.onerror = function (e) {
-      return reject(Error("Network Error: " + e));
-    };
-    if (data) {
-      req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-      data = JSON.stringify(data);
-    }
-    if (header !== undefined) for (var key in header) {
-      req.setRequestHeader(key, header[key]);
-    }req.send(data);
-  });
+   // temporary measure
+   if (!/^https?:\/\/codap.concord.org/.test(window.top.location)) return;
+   method = method.toUpperCase();
+   return new Promise(function (resolve, reject) {
+      var req = new XMLHttpRequest();
+      req.open(method, url);
+      req.onload = function () {
+         return req.status === 200 ? resolve(req.response) : reject(Error(req.statusText));
+      };
+      req.onerror = function (e) {
+         return reject(Error("Network Error: " + e));
+      };
+      if (data) {
+         req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+         data = JSON.stringify(data);
+      }
+      if (header !== undefined) for (var key in header) {
+         req.setRequestHeader(key, header[key]);
+      }req.send(data);
+   });
 }
 
 /**
@@ -191,10 +193,12 @@ function ajax_as_promise(url) {
  *   are available.
  */
 function post_scores_for_mcbkt_analysis(data) {
-  var url = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'https://ukde.physicsfront.com/mcbkt/codapproxy_stub';
-  var header = arguments[2];
+   var url = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'https://ukde.physicsfront.com/mcbkt/codapproxy_stub';
+   var header = arguments[2];
 
-  return ajax_as_promise(url, 'post', data, header);
+   // temporary measure
+   if (!/^https?:\/\/codap.concord.org/.test(window.top.location)) return;
+   return ajax_as_promise(url, 'post', data, header);
 }
 
 /**
@@ -226,10 +230,12 @@ function post_scores_for_mcbkt_analysis(data) {
  *   are available.
  */
 function post_logdata_for_mcbkt_analysis(logdata) {
-  var url = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'https://ukde.physicsfront.com/logdata/codapproxy_stub';
-  var header = arguments[2];
+   var url = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'https://ukde.physicsfront.com/logdata/codapproxy_stub';
+   var header = arguments[2];
 
-  return ajax_as_promise(url, 'post', logdata, header);
+   // temporary measure
+   if (!/^https?:\/\/codap.concord.org/.test(window.top.location)) return;
+   return ajax_as_promise(url, 'post', logdata, header);
 }
 
 /**

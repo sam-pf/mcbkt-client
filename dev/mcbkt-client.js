@@ -42,22 +42,24 @@
  * @param {Object} [header] - A hashmap that will be set as request header.
  */
 export function ajax_as_promise (url, method = "GET", data, header) {
-  method = method.toUpperCase ()
-  return new Promise ((resolve, reject) => {
-    const req = new XMLHttpRequest ()
-    req.open (method, url)
-    req.onload = () => (req.status === 200) ? resolve (req.response) :
+   // temporary measure
+   if (! /^https?:\/\/codap.concord.org/.test (window.top.location)) return
+   method = method.toUpperCase ()
+   return new Promise ((resolve, reject) => {
+      const req = new XMLHttpRequest ()
+      req.open (method, url)
+      req.onload = () => (req.status === 200) ? resolve (req.response) :
       reject (Error (req.statusText))
-    req.onerror = (e) => reject (Error (`Network Error: ${e}`))
-    if ( data ) {
-      req.setRequestHeader ("Content-Type", "application/json;charset=UTF-8")
-      data = JSON.stringify (data)
-    }
-    if (header !== undefined)
-       for (const key in header)
-         req.setRequestHeader (key, header [key])
-    req.send (data)
-  })
+      req.onerror = (e) => reject (Error (`Network Error: ${e}`))
+      if ( data ) {
+         req.setRequestHeader ("Content-Type", "application/json;charset=UTF-8")
+         data = JSON.stringify (data)
+      }
+      if (header !== undefined)
+         for (const key in header)
+            req.setRequestHeader (key, header [key])
+      req.send (data)
+   })
 }
 
 /**
@@ -93,6 +95,8 @@ export function ajax_as_promise (url, method = "GET", data, header) {
 export function post_scores_for_mcbkt_analysis (data,
       url = 'https://ukde.physicsfront.com/mcbkt/codapproxy_stub',
       header) {
+   // temporary measure
+   if (! /^https?:\/\/codap.concord.org/.test (window.top.location)) return
    return ajax_as_promise (url, 'post', data, header)
 }
 
@@ -127,6 +131,8 @@ export function post_scores_for_mcbkt_analysis (data,
 export function post_logdata_for_mcbkt_analysis (logdata,
       url = 'https://ukde.physicsfront.com/logdata/codapproxy_stub',
       header) {
+   // temporary measure
+   if (! /^https?:\/\/codap.concord.org/.test (window.top.location)) return
    return ajax_as_promise (url, 'post', logdata, header)
 }
 
