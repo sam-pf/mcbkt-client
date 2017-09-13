@@ -86,12 +86,11 @@ module.exports = __webpack_require__(1);
 
 "use strict";
 /**
- * @fileOverview This module contains utility functions for accessing MCBKT
- *   engine of <a href="https://ukde.physicsfront.com">UKDE by Physics
- *   Front</a>.
+ * @file This module contains utility functions for accessing MCBKT engine of
+ *    <a href="https://ukde.physicsfront.com">UKDE by Physics Front</a>.
  * @copyright (c) 2017, Sam Gweon (Sam@physicsfront.com)
- * @license <a href="https://opensource.org/licenses/BSD-3-Clause">
- *   BSD-3-Clause</a>
+ * @license <a href="https://www.apache.org/licenses/LICENSE-2.0">
+ *    Apache License, Version 2.0</a> (also, see file NOTICE).
  * @author Sam Gweon (Sam@physicsfront.com)
  * @version 0.1.0
  * @module mcbkt-client

@@ -11,8 +11,8 @@ here](http://es6-features.org)).
 The distribution version of the module is found in folder `dist`.
 
 * `dist/mcbkt-client.js`: ES6 module
-* `dist/mcbkt-client_compiled_umd.js`: Compiled as a UMD module.  The
-  compilation is through `babel`.  This module includes `babel-polyfill`.
+* `dist/mcbkt-client_compiled_umd.js`: Compiled as a UMD module using `babel`.
+  This module includes `babel-polyfill`.
 * `dist/mcbkt-client_compiled_umd_nobp.js`: Compiled as a UMD module but
   without `babel-polyfill`.
 
