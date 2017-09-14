@@ -11,6 +11,20 @@
 
 "use strict"
 
+function embedded_in_codap () {
+   return true
+   //
+   // The code below does not work due to "cross-origin ... violation".  Must
+   // be passed the top href from clients when this library gets initialized.
+   //
+   // let s = window.top.location
+   // if (typeof s == 'object') s = s.href
+   // console.log ('wtl = ' + window.top.location)
+   // console.log ('wtlh = ' + window.top.location.href)
+   // // temporary measure
+   // return ! /^https?:\/\/codap.concord.org/.test (s)
+}
+
 /**
  * Makes an ajax call to <tt>url</tt> and returns a <tt>Promise</tt> object.
  *
@@ -42,8 +56,8 @@
  * @param {Object} [header] - A hashmap that will be set as request header.
  */
 export function ajax_as_promise (url, method = "GET", data, header) {
-   // temporary measure
-   if (! /^https?:\/\/codap.concord.org/.test (window.top.location)) return
+   // temporary measure ?
+   if (! embedded_in_codap ()) return
    method = method.toUpperCase ()
    return new Promise ((resolve, reject) => {
       const req = new XMLHttpRequest ()
@@ -95,8 +109,8 @@ export function ajax_as_promise (url, method = "GET", data, header) {
 export function post_scores_for_mcbkt_analysis (data,
       url = 'https://ukde.physicsfront.com/mcbkt/codapproxy_stub',
       header) {
-   // temporary measure
-   if (! /^https?:\/\/codap.concord.org/.test (window.top.location)) return
+   // temporary measure ?
+   if (! embedded_in_codap ()) return
    return ajax_as_promise (url, 'post', data, header)
 }
 
@@ -131,8 +145,8 @@ export function post_scores_for_mcbkt_analysis (data,
 export function post_logdata_for_mcbkt_analysis (logdata,
       url = 'https://ukde.physicsfront.com/logdata/codapproxy_stub',
       header) {
-   // temporary measure
-   if (! /^https?:\/\/codap.concord.org/.test (window.top.location)) return
+   // temporary measure ?
+   if (! embedded_in_codap ()) return
    return ajax_as_promise (url, 'post', logdata, header)
 }
 

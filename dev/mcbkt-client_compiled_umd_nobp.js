@@ -98,6 +98,26 @@ module.exports = __webpack_require__(1);
 
 
 
+Object.defineProperty(exports, "__esModule", {
+   value: true
+});
+exports.ajax_as_promise = ajax_as_promise;
+exports.post_scores_for_mcbkt_analysis = post_scores_for_mcbkt_analysis;
+exports.post_logdata_for_mcbkt_analysis = post_logdata_for_mcbkt_analysis;
+function embedded_in_codap() {
+   return true;
+   //
+   // The code below does not work due to "cross-origin ... violation".  Must
+   // be passed the top href from clients when this library gets initialized.
+   //
+   // let s = window.top.location
+   // if (typeof s == 'object') s = s.href
+   // console.log ('wtl = ' + window.top.location)
+   // console.log ('wtlh = ' + window.top.location.href)
+   // // temporary measure
+   // return ! /^https?:\/\/codap.concord.org/.test (s)
+}
+
 /**
  * Makes an ajax call to <tt>url</tt> and returns a <tt>Promise</tt> object.
  *
@@ -128,20 +148,13 @@ module.exports = __webpack_require__(1);
  *   <tt>XMLHttpRequest</tt> object that opens request to <tt>url</tt>.
  * @param {Object} [header] - A hashmap that will be set as request header.
  */
-
-Object.defineProperty(exports, "__esModule", {
-   value: true
-});
-exports.ajax_as_promise = ajax_as_promise;
-exports.post_scores_for_mcbkt_analysis = post_scores_for_mcbkt_analysis;
-exports.post_logdata_for_mcbkt_analysis = post_logdata_for_mcbkt_analysis;
 function ajax_as_promise(url) {
    var method = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "GET";
    var data = arguments[2];
    var header = arguments[3];
 
-   // temporary measure
-   if (!/^https?:\/\/codap.concord.org/.test(window.top.location)) return;
+   // temporary measure ?
+   if (!embedded_in_codap()) return;
    method = method.toUpperCase();
    return new Promise(function (resolve, reject) {
       var req = new XMLHttpRequest();
@@ -196,8 +209,8 @@ function post_scores_for_mcbkt_analysis(data) {
    var url = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'https://ukde.physicsfront.com/mcbkt/codapproxy_stub';
    var header = arguments[2];
 
-   // temporary measure
-   if (!/^https?:\/\/codap.concord.org/.test(window.top.location)) return;
+   // temporary measure ?
+   if (!embedded_in_codap()) return;
    return ajax_as_promise(url, 'post', data, header);
 }
 
@@ -233,8 +246,8 @@ function post_logdata_for_mcbkt_analysis(logdata) {
    var url = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'https://ukde.physicsfront.com/logdata/codapproxy_stub';
    var header = arguments[2];
 
-   // temporary measure
-   if (!/^https?:\/\/codap.concord.org/.test(window.top.location)) return;
+   // temporary measure ?
+   if (!embedded_in_codap()) return;
    return ajax_as_promise(url, 'post', logdata, header);
 }
 
