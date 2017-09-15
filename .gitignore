@@ -5,6 +5,9 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+# skip this for module
+package-lock.json
+
 # Editor directories and files
 .idea
 *.suo
