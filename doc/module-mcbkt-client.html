@@ -41,7 +41,14 @@
     
         
             <div class="description">This module contains utility functions for accessing MCBKT engine of
-   <a href="https://ukde.physicsfront.com">UKDE by Physics Front</a>.</div>
+   <a href="https://ukde.physicsfront.com">UKDE by Physics Front</a>.
+   By design, the utility functions contained in this module are
+   content-agnostic and merely make generic ajax calls.  So, this module
+   has no knowledge about how UKDE connections actually work.  The actual
+   work is to be carried out by the (hidden and hard-coded) URLs
+   referenced in this file.  Such work should be carried out in a secure
+   manner in the backend: this is the job left for the users of this
+   module.</div>
         
 
         
@@ -194,7 +201,7 @@ href="#.post_logdata_for_mcbkt_analysis">post_logdata_for_mcbkt_analysis</a>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="mcbkt-client.js.html">mcbkt-client.js</a>, <a href="mcbkt-client.js.html#line157">line 157</a>
+        <a href="mcbkt-client.js.html">mcbkt-client.js</a>, <a href="mcbkt-client.js.html#line155">line 155</a>
     </li></ul></dd>
     
 
@@ -481,7 +488,7 @@ href="#.post_logdata_for_mcbkt_analysis">post_logdata_for_mcbkt_analysis</a>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="mcbkt-client.js.html">mcbkt-client.js</a>, <a href="mcbkt-client.js.html#line58">line 58</a>
+        <a href="mcbkt-client.js.html">mcbkt-client.js</a>, <a href="mcbkt-client.js.html#line54">line 54</a>
     </li></ul></dd>
     
 
@@ -528,7 +535,10 @@ href="#.post_logdata_for_mcbkt_analysis">post_logdata_for_mcbkt_analysis</a>
 
     <h5>Example</h5>
     
-    <pre class="prettyprint"><code>ajax_as_promise ('https://...', ...)
+    <pre class="prettyprint"><code>// This example is meant to be a pseudo-code, not a valid javascript
+// code.  For instance, square brackets ([ ... ]) are used to denote
+// optional content.
+ajax_as_promise ('https://...', ...)
   .then ((data) =>
      // do stuff with return data on successfully resolved promise
      [, (reason) =>
@@ -547,7 +557,7 @@ href="#.post_logdata_for_mcbkt_analysis">post_logdata_for_mcbkt_analysis</a>
     
 
     
-    <h4 class="name" id=".post_logdata_for_mcbkt_analysis"><span class="type-signature">(static) </span>post_logdata_for_mcbkt_analysis<span class="signature">(logdata<span class="signature-attributes">opt</span>, url<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id=".post_logdata_for_mcbkt_analysis"><span class="type-signature">(static) </span>post_logdata_for_mcbkt_analysis<span class="signature">(logdata)</span><span class="type-signature"></span></h4>
     
 
     
@@ -580,8 +590,6 @@ calculation done.
         <th>Type</th>
 
         
-        <th>Attributes</th>
-        
 
         
 
@@ -602,57 +610,10 @@ calculation done.
             </td>
 
             
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
 
             
 
             <td class="description last">This must be the logdata in the form of a hashmap.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>url</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">The URL for the MCBKT analysis.  For security,
-  no sensitive information must appear in the URL (or logdata).  The
-  current default value is a temporary one that should work "for a while".
-  However, it may stop working at some point, e.g., if better proxy URLs
-  are available.</td>
         </tr>
 
     
@@ -693,7 +654,7 @@ calculation done.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="mcbkt-client.js.html">mcbkt-client.js</a>, <a href="mcbkt-client.js.html#line145">line 145</a>
+        <a href="mcbkt-client.js.html">mcbkt-client.js</a>, <a href="mcbkt-client.js.html#line137">line 137</a>
     </li></ul></dd>
     
 
@@ -736,7 +697,10 @@ calculation done.
 
     <h5>Example</h5>
     
-    <pre class="prettyprint"><code>post_logdata_for_mcbkt_analysis (logdata, ...)
+    <pre class="prettyprint"><code>// This example is meant to be a pseudo-code, not a valid javascript
+// code.  For instance, square brackets ([ ... ]) are used to denote
+// optional content.
+post_logdata_for_mcbkt_analysis (logdata, ...)
   .then ((data) =>
      // do stuff with return data on successfully resolved promise
      [, (reason) =>
@@ -755,7 +719,7 @@ calculation done.
     
 
     
-    <h4 class="name" id=".post_scores_for_mcbkt_analysis"><span class="type-signature">(static) </span>post_scores_for_mcbkt_analysis<span class="signature">(data<span class="signature-attributes">opt</span>, url<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id=".post_scores_for_mcbkt_analysis"><span class="type-signature">(static) </span>post_scores_for_mcbkt_analysis<span class="signature">(scores)</span><span class="type-signature"></span></h4>
     
 
     
@@ -788,8 +752,6 @@ calculation done.
         <th>Type</th>
 
         
-        <th>Attributes</th>
-        
 
         
 
@@ -802,23 +764,13 @@ calculation done.
 
         <tr>
             
-                <td class="name"><code>data</code></td>
+                <td class="name"><code>scores</code></td>
             
 
             <td class="type">
             
             </td>
 
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
             
 
             
@@ -826,43 +778,6 @@ calculation done.
             <td class="description last">This must be a hashmap with an entry "scores", which
   must hold an array of numbers, normally bound within the [0,1] range.
   Optional entries include "score-max' and "times".</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>url</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">The URL for the MCBKT analysis.  For security,
-  no sensitive information must appear in the URL (or data).  The current
-  default value is a temporary one that should work "for a while".
-  However, it may stop working at some point, e.g., if better proxy URLs
-  are available.</td>
         </tr>
 
     
@@ -903,7 +818,7 @@ calculation done.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="mcbkt-client.js.html">mcbkt-client.js</a>, <a href="mcbkt-client.js.html#line109">line 109</a>
+        <a href="mcbkt-client.js.html">mcbkt-client.js</a>, <a href="mcbkt-client.js.html#line104">line 104</a>
     </li></ul></dd>
     
 
@@ -946,7 +861,10 @@ calculation done.
 
     <h5>Example</h5>
     
-    <pre class="prettyprint"><code>post_scores_for_mcbkt_analysis (data, ...)
+    <pre class="prettyprint"><code>// This example is meant to be a pseudo-code, not a valid javascript
+// code.  For instance, square brackets ([ ... ]) are used to denote
+// optional content.
+post_scores_for_mcbkt_analysis (scores, ...)
   .then ((data) =>
      // do stuff with return data on successfully resolved promise
      [, (reason) =>
@@ -981,7 +899,7 @@ calculation done.
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.4</a> on Wed Sep 13 2017 16:31:58 GMT-0700 (PDT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.4</a> on Sat Sep 16 2017 16:17:12 GMT-0700 (PDT)
 </footer>
 
 <script> prettyPrint(); </script>

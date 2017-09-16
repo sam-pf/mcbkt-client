@@ -29,6 +29,13 @@
             <pre class="prettyprint source linenums"><code>/**
  * @file This module contains utility functions for accessing MCBKT engine of
  *    &lt;a href="https://ukde.physicsfront.com">UKDE by Physics Front&lt;/a>.
+ *    By design, the utility functions contained in this module are
+ *    content-agnostic and merely make generic ajax calls.  So, this module
+ *    has no knowledge about how UKDE connections actually work.  The actual
+ *    work is to be carried out by the (hidden and hard-coded) URLs
+ *    referenced in this file.  Such work should be carried out in a secure
+ *    manner in the backend: this is the job left for the users of this
+ *    module.
  * @copyright (c) 2017, Sam Gweon (Sam@physicsfront.com)
  * @license &lt;a href="https://www.apache.org/licenses/LICENSE-2.0">
  *    Apache License, Version 2.0&lt;/a> (also, see file NOTICE).
@@ -39,26 +46,15 @@
 
 "use strict"
 
-function embedded_in_codap () {
-   return true
-   //
-   // The code below does not work due to "cross-origin ... violation".  Must
-   // be passed the top href from clients when this library gets initialized.
-   //
-   // let s = window.top.location
-   // if (typeof s == 'object') s = s.href
-   // console.log ('wtl = ' + window.top.location)
-   // console.log ('wtlh = ' + window.top.location.href)
-   // // temporary measure
-   // return ! /^https?:\/\/codap.concord.org/.test (s)
-}
-
 /**
  * Makes an ajax call to &lt;tt>url&lt;/tt> and returns a &lt;tt>Promise&lt;/tt> object.
  *
  * @returns {} A &lt;tt>Promise&lt;/tt> object.  The returned object can be
  *   used as shown in the example.
  * @example
+ * // This example is meant to be a pseudo-code, not a valid javascript
+ * // code.  For instance, square brackets ([ ... ]) are used to denote
+ * // optional content.
  * ajax_as_promise ('https://...', ...)
  *   .then ((data) =>
  *      // do stuff with return data on successfully resolved promise
@@ -84,16 +80,16 @@ function embedded_in_codap () {
  * @param {Object} [header] - A hashmap that will be set as request header.
  */
 export function ajax_as_promise (url, method = "GET", data, header) {
-   // temporary measure ?
-   if (! embedded_in_codap ()) return
    method = method.toUpperCase ()
+   // console.log ("** url = " + url + "; method = " + method + "; data = " +
+   //              JSON.stringify (data))
    return new Promise ((resolve, reject) => {
       const req = new XMLHttpRequest ()
       req.open (method, url)
       req.onload = () => (req.status === 200) ? resolve (req.response) :
       reject (Error (req.statusText))
       req.onerror = (e) => reject (Error (`Network Error: ${e}`))
-      if ( data ) {
+      if (data) {
          req.setRequestHeader ("Content-Type", "application/json;charset=UTF-8")
          data = JSON.stringify (data)
       }
@@ -114,7 +110,10 @@ export function ajax_as_promise (url, method = "GET", data, header) {
  *   analysis result.  If &lt;tt>error&lt;/tt> field does not exist, data will
  *   contain valid MCBKT analysis result.
  * @example
- * post_scores_for_mcbkt_analysis (data, ...)
+ * // This example is meant to be a pseudo-code, not a valid javascript
+ * // code.  For instance, square brackets ([ ... ]) are used to denote
+ * // optional content.
+ * post_scores_for_mcbkt_analysis (scores, ...)
  *   .then ((data) =>
  *      // do stuff with return data on successfully resolved promise
  *      [, (reason) =>
@@ -125,21 +124,15 @@ export function ajax_as_promise (url, method = "GET", data, header) {
  *      // deal with any errror thrown
  *   )
  *
- * @param {} [data] - This must be a hashmap with an entry "scores", which
+ * @param {} scores - This must be a hashmap with an entry "scores", which
  *   must hold an array of numbers, normally bound within the [0,1] range.
  *   Optional entries include "score-max' and "times".
- * @param {String} [url] - The URL for the MCBKT analysis.  For security,
- *   no sensitive information must appear in the URL (or data).  The current
- *   default value is a temporary one that should work "for a while".
- *   However, it may stop working at some point, e.g., if better proxy URLs
- *   are available.
  */
-export function post_scores_for_mcbkt_analysis (data,
-      url = 'https://ukde.physicsfront.com/mcbkt/codapproxy_stub',
-      header) {
-   // temporary measure ?
-   if (! embedded_in_codap ()) return
-   return ajax_as_promise (url, 'post', data, header)
+// eslint-disable-next-line no-unused-vars
+export function post_scores_for_mcbkt_analysis (scores) {
+   // let args = Array.prototype.splice.call (arguments, 1)
+   return ajax_as_promise (scores_url, 'post',
+                           Array.prototype.slice.call (arguments))
 }
 
 /**
@@ -152,6 +145,9 @@ export function post_scores_for_mcbkt_analysis (data,
  *   Only when the accumulated data merit a new MCBKT analysis, data will
  *   contain MCBKT analysis result.
  * @example
+ * // This example is meant to be a pseudo-code, not a valid javascript
+ * // code.  For instance, square brackets ([ ... ]) are used to denote
+ * // optional content.
  * post_logdata_for_mcbkt_analysis (logdata, ...)
  *   .then ((data) =>
  *      // do stuff with return data on successfully resolved promise
@@ -163,20 +159,22 @@ export function post_scores_for_mcbkt_analysis (data,
  *      // deal with any errror thrown
  *   )
  *
- * @param {} [logdata] - This must be the logdata in the form of a hashmap.
- * @param {String} [url] - The URL for the MCBKT analysis.  For security,
- *   no sensitive information must appear in the URL (or logdata).  The
- *   current default value is a temporary one that should work "for a while".
- *   However, it may stop working at some point, e.g., if better proxy URLs
- *   are available.
+ * @param {} logdata - This must be the logdata in the form of a hashmap.
  */
-export function post_logdata_for_mcbkt_analysis (logdata,
-      url = 'https://ukde.physicsfront.com/logdata/codapproxy_stub',
-      header) {
-   // temporary measure ?
-   if (! embedded_in_codap ()) return
-   return ajax_as_promise (url, 'post', logdata, header)
+// eslint-disable-next-line no-unused-vars
+export function post_logdata_for_mcbkt_analysis (logdata) {
+   // let args = Array.prototype.splice.call (arguments, 1)
+   return ajax_as_promise (logdata_url, 'post',
+                           Array.prototype.slice.call (arguments))
 }
+
+const base_url = (function () {
+   let l = window.location
+   return l.protocol + '//' + l.host + (l.port? (':' + l.port): '')
+})() + '/_up'
+
+const logdata_url = base_url + '/logdata'
+const scores_url = base_url + '/scores'
 
 /**
  * &lt;b>default export:&lt;/b> &lt;a
@@ -199,7 +197,7 @@ export default post_logdata_for_mcbkt_analysis
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.4</a> on Wed Sep 13 2017 16:31:58 GMT-0700 (PDT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.4</a> on Sat Sep 16 2017 16:17:12 GMT-0700 (PDT)
 </footer>
 
 <script> prettyPrint(); </script>

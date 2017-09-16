@@ -88,6 +88,13 @@ module.exports = __webpack_require__(1);
 /**
  * @file This module contains utility functions for accessing MCBKT engine of
  *    <a href="https://ukde.physicsfront.com">UKDE by Physics Front</a>.
+ *    By design, the utility functions contained in this module are
+ *    content-agnostic and merely make generic ajax calls.  So, this module
+ *    has no knowledge about how UKDE connections actually work.  The actual
+ *    work is to be carried out by the (hidden and hard-coded) URLs
+ *    referenced in this file.  Such work should be carried out in a secure
+ *    manner in the backend: this is the job left for the users of this
+ *    module.
  * @copyright (c) 2017, Sam Gweon (Sam@physicsfront.com)
  * @license <a href="https://www.apache.org/licenses/LICENSE-2.0">
  *    Apache License, Version 2.0</a> (also, see file NOTICE).
@@ -98,32 +105,15 @@ module.exports = __webpack_require__(1);
 
 
 
-Object.defineProperty(exports, "__esModule", {
-   value: true
-});
-exports.ajax_as_promise = ajax_as_promise;
-exports.post_scores_for_mcbkt_analysis = post_scores_for_mcbkt_analysis;
-exports.post_logdata_for_mcbkt_analysis = post_logdata_for_mcbkt_analysis;
-function embedded_in_codap() {
-   return true;
-   //
-   // The code below does not work due to "cross-origin ... violation".  Must
-   // be passed the top href from clients when this library gets initialized.
-   //
-   // let s = window.top.location
-   // if (typeof s == 'object') s = s.href
-   // console.log ('wtl = ' + window.top.location)
-   // console.log ('wtlh = ' + window.top.location.href)
-   // // temporary measure
-   // return ! /^https?:\/\/codap.concord.org/.test (s)
-}
-
 /**
  * Makes an ajax call to <tt>url</tt> and returns a <tt>Promise</tt> object.
  *
  * @returns {} A <tt>Promise</tt> object.  The returned object can be
  *   used as shown in the example.
  * @example
+ * // This example is meant to be a pseudo-code, not a valid javascript
+ * // code.  For instance, square brackets ([ ... ]) are used to denote
+ * // optional content.
  * ajax_as_promise ('https://...', ...)
  *   .then ((data) =>
  *      // do stuff with return data on successfully resolved promise
@@ -148,14 +138,21 @@ function embedded_in_codap() {
  *   <tt>XMLHttpRequest</tt> object that opens request to <tt>url</tt>.
  * @param {Object} [header] - A hashmap that will be set as request header.
  */
+
+Object.defineProperty(exports, "__esModule", {
+   value: true
+});
+exports.ajax_as_promise = ajax_as_promise;
+exports.post_scores_for_mcbkt_analysis = post_scores_for_mcbkt_analysis;
+exports.post_logdata_for_mcbkt_analysis = post_logdata_for_mcbkt_analysis;
 function ajax_as_promise(url) {
    var method = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "GET";
    var data = arguments[2];
    var header = arguments[3];
 
-   // temporary measure ?
-   if (!embedded_in_codap()) return;
    method = method.toUpperCase();
+   // console.log ("** url = " + url + "; method = " + method + "; data = " +
+   //              JSON.stringify (data))
    return new Promise(function (resolve, reject) {
       var req = new XMLHttpRequest();
       req.open(method, url);
@@ -185,7 +182,10 @@ function ajax_as_promise(url) {
  *   analysis result.  If <tt>error</tt> field does not exist, data will
  *   contain valid MCBKT analysis result.
  * @example
- * post_scores_for_mcbkt_analysis (data, ...)
+ * // This example is meant to be a pseudo-code, not a valid javascript
+ * // code.  For instance, square brackets ([ ... ]) are used to denote
+ * // optional content.
+ * post_scores_for_mcbkt_analysis (scores, ...)
  *   .then ((data) =>
  *      // do stuff with return data on successfully resolved promise
  *      [, (reason) =>
@@ -196,22 +196,14 @@ function ajax_as_promise(url) {
  *      // deal with any errror thrown
  *   )
  *
- * @param {} [data] - This must be a hashmap with an entry "scores", which
+ * @param {} scores - This must be a hashmap with an entry "scores", which
  *   must hold an array of numbers, normally bound within the [0,1] range.
  *   Optional entries include "score-max' and "times".
- * @param {String} [url] - The URL for the MCBKT analysis.  For security,
- *   no sensitive information must appear in the URL (or data).  The current
- *   default value is a temporary one that should work "for a while".
- *   However, it may stop working at some point, e.g., if better proxy URLs
- *   are available.
  */
-function post_scores_for_mcbkt_analysis(data) {
-   var url = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'https://ukde.physicsfront.com/mcbkt/codapproxy_stub';
-   var header = arguments[2];
-
-   // temporary measure ?
-   if (!embedded_in_codap()) return;
-   return ajax_as_promise(url, 'post', data, header);
+// eslint-disable-next-line no-unused-vars
+function post_scores_for_mcbkt_analysis(scores) {
+   // let args = Array.prototype.splice.call (arguments, 1)
+   return ajax_as_promise(scores_url, 'post', Array.prototype.slice.call(arguments));
 }
 
 /**
@@ -224,6 +216,9 @@ function post_scores_for_mcbkt_analysis(data) {
  *   Only when the accumulated data merit a new MCBKT analysis, data will
  *   contain MCBKT analysis result.
  * @example
+ * // This example is meant to be a pseudo-code, not a valid javascript
+ * // code.  For instance, square brackets ([ ... ]) are used to denote
+ * // optional content.
  * post_logdata_for_mcbkt_analysis (logdata, ...)
  *   .then ((data) =>
  *      // do stuff with return data on successfully resolved promise
@@ -235,21 +230,21 @@ function post_scores_for_mcbkt_analysis(data) {
  *      // deal with any errror thrown
  *   )
  *
- * @param {} [logdata] - This must be the logdata in the form of a hashmap.
- * @param {String} [url] - The URL for the MCBKT analysis.  For security,
- *   no sensitive information must appear in the URL (or logdata).  The
- *   current default value is a temporary one that should work "for a while".
- *   However, it may stop working at some point, e.g., if better proxy URLs
- *   are available.
+ * @param {} logdata - This must be the logdata in the form of a hashmap.
  */
+// eslint-disable-next-line no-unused-vars
 function post_logdata_for_mcbkt_analysis(logdata) {
-   var url = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'https://ukde.physicsfront.com/logdata/codapproxy_stub';
-   var header = arguments[2];
-
-   // temporary measure ?
-   if (!embedded_in_codap()) return;
-   return ajax_as_promise(url, 'post', logdata, header);
+   // let args = Array.prototype.splice.call (arguments, 1)
+   return ajax_as_promise(logdata_url, 'post', Array.prototype.slice.call(arguments));
 }
+
+var base_url = function () {
+   var l = window.location;
+   return l.protocol + '//' + l.host + (l.port ? ':' + l.port : '');
+}() + '/_up';
+
+var logdata_url = base_url + '/logdata';
+var scores_url = base_url + '/scores';
 
 /**
  * <b>default export:</b> <a
