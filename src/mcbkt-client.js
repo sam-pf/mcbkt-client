@@ -1,13 +1,6 @@
 /**
  * @file This module contains utility functions for accessing MCBKT engine of
  *    <a href="https://ukde.physicsfront.com">UKDE by Physics Front</a>.
- *    By design, the utility functions contained in this module are
- *    content-agnostic and merely make generic ajax calls.  So, this module
- *    has no knowledge about how UKDE connections actually work.  The actual
- *    work is to be carried out by the (hidden and hard-coded) URLs
- *    referenced in this file.  Such work should be carried out in a secure
- *    manner in the backend: this is the job left for the users of this
- *    module.
  * @copyright (c) 2017, Sam Gweon (Sam@physicsfront.com)
  * @license <a href="https://www.apache.org/licenses/LICENSE-2.0">
  *    Apache License, Version 2.0</a> (also, see file NOTICE).
@@ -17,6 +10,7 @@
  */
 
 "use strict"
+
 
 /**
  * Makes an ajax call to <tt>url</tt> and returns a <tt>Promise</tt> object.
@@ -107,6 +101,7 @@ export function post_scores_for_mcbkt_analysis (scores) {
                            Array.prototype.slice.call (arguments))
 }
 
+
 /**
  * Makes an ajax call to UKDE to post logdata and potentially get a MCBKT
  * calculation done.
@@ -150,6 +145,6 @@ const scores_url = base_url + '/scores'
 
 /**
  * <b>default export:</b> <a
- * href="#.post_logdata_for_mcbkt_analysis">post_logdata_for_mcbkt_analysis</a>
+ * href="#.post_logdata_for_mcbkt_analysis">post_logdata_for_mcbkt_analysis</a>.
  */
 export default post_logdata_for_mcbkt_analysis

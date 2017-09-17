@@ -40,3 +40,13 @@ In order for the make command to work, `bash` (as `/bin/bash`) and GNU `make`
 are required.  If these are not installed in your system, one way could be
 that you would want/need to look inside of `GNUmakefile`, extract desired
 commands, and run them by hand.
+
+# Simple nature of this module
+
+By design, the functions contained in, and exported by, this module are very
+simple: they are completely content-agnostic  and all they do is just making
+simple ajax calls to send UKDE requests and receive results.  So, this module
+may be thought of as a simple broker, which has no knowledge about how UKDE
+connections actually work.  The actual work is to be carried out in the
+backend: this is the job left for the users of this module to carry out in a
+secure manner.
