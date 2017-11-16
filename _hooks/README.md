@@ -1,7 +1,7 @@
 # Git hooks
 
-The hook scripts defined here can be installed by running
-`./install.git.hooks`.  The scripts are installed in `../.git/hooks` as
+The hook scripts defined here can be installed by running `install.git.hooks`
+(or `./install.git.hooks`).  The scripts are installed in `../.git/hooks` as
 symlinks.  Each script, if it has a correct name, will be run automatically
 after appropriate event is triggered.
 
