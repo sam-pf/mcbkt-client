@@ -1,5 +1,5 @@
-SHELL:=/bin/bash
-PATHREGEX:=(:|^)\./node_modules/\.bin(:|$$)
+SHELL := /bin/bash
+PATHREGEX := (:|^)\./node_modules/\.bin(:|$$)
 ifeq "$(shell [[ $$PATH =~ $(PATHREGEX) ]] && echo 'y' || echo 'n' )" "n"
 	export PATH:=./node_modules/.bin:$(PATH)
 endif
@@ -19,7 +19,7 @@ SRC_JSPLUS:=$(SRC_JSFILES) $(SRC_WEBPACKCFG) $(SRC_MAKEFILE)
 DOC_REFFILE:=$(DOC_DIR)/index.html
 LIB_NAME:=mcbkt-client
 
-WEBPACKBIN:=webpack
+WEBPACKBIN := webpack
 
 SRC_ES6:=$(SRC_DIR)/$(LIB_NAME).js
 TGT_ES6:=$(DST_DIR)/$(LIB_NAME).js
@@ -29,7 +29,7 @@ TG2_DEV:=$(DEV_DIR)/$(LIB_NAME)_compiled_umd_nobp.js
 TGT_DST:=$(DST_DIR)/$(LIB_NAME)_compiled_umd.js
 TG2_DST:=$(DST_DIR)/$(LIB_NAME)_compiled_umd_nobp.js
 
-.PHONY: test webpack doc
+.PHONY: all clean test webpack doc again dev dist forever lint npm-install node_modules
 
 all: lint doc dev dist es6
 
