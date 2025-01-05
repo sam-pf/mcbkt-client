@@ -15,4 +15,6 @@ package-lock.json
 *.njsproj
 *.sln
 
+.fng.more
+
 install.git.hooks
